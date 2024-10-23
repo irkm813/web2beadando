@@ -17,9 +17,13 @@ class DatabaseModel {
     }
 
     // Dinamikus SELECT lekérdezés
-    public function select($table, $columns = "*", $where = "", $params = []) {
+    public function select($table, $columns = "*", $where = "", $join = "", $params = []) {
         $sql = "SELECT $columns FROM $table";
 
+        if ($join){
+            $sql .= " $join";
+        }
+        
         if ($where) {
             $sql .= " WHERE $where";
         }
