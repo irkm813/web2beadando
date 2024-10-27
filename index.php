@@ -20,8 +20,8 @@ $menuItems = $db->select(
 $request = $_SERVER['REQUEST_URI'];
 
 //Az api elérés megfelelő kezelése
-if (strpos($request, '/api') === 0) {
-    require __DIR__ . '/api.php';
+if (strpos($request, '/restapi') === 0) {
+    require __DIR__ . '/restapi.php';
 }
 else{
     // 2. Szétválasztás a route-okra, amennyiben nem az api-t próbáljuk elérni
