@@ -20,10 +20,16 @@ $menuItems = $db->select(
 $request = $_SERVER['REQUEST_URI'];
 $isApi= false;
 
-//Az api elérés megfelelő kezelése
+//A rest api elérés megfelelő kezelése
 if (strpos($request, '/restapi') === 0) {
     require __DIR__ . '/restapi.php';
-    $isApi=true;
+    exit;
+}
+
+//Soap api elérés megfelelő kezelése
+if (strpos($request, '/soapapi') === 0) {
+    require __DIR__ . '/models/SoapServerModel.php';
+    exit;
 }
 
 // 2. Szétválasztás a route-okra, amennyiben nem az api-t próbáljuk elérni
@@ -41,10 +47,9 @@ switch ($request) {
         require __DIR__ . '/controllers/no_sidebar_controller.php';
         break;
     default:
-        if (!$isApi){
-            http_response_code(404);
-            require __DIR__ . '/views/404.php';
-            break;
-        }
+        http_response_code(404);
+        require __DIR__ . '/views/404.php';
+        break;
+
 }
 
