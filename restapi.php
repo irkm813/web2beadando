@@ -6,9 +6,9 @@ $db = new DatabaseModel();
 $request_method = $_SERVER['REQUEST_METHOD'];
 
 //Autentikáció
-if (isset($_GET['username']) && isset ($_GET['password'])){
-    $username=$_GET['username'];
-    $password=$_GET['password'];
+if (isset($_SERVER['PHP_AUTH_USER']) && isset ($_SERVER['PHP_AUTH_PW'])){
+    $username=$_SERVER['PHP_AUTH_USER'];
+    $password=$_SERVER['PHP_AUTH_PW'];
     $db_role =  $db->select('users', 'role', "username=?",'',[$username]);
     $role =  $db_role[0]["role"];
 }else{
@@ -68,15 +68,11 @@ function getAllNyeremeny($username,$password) {
 }
 
 // Egy hír lekérdezése id alapján (GET)
-function getNyeremeny($username,$password,$id,$role) {
+function getNyeremeny($username,$password,$id) {
 
     try {
         if (!restApiAuth($username, $password)) {
             throw new Exception('Hibás felhasználónév vagy jelszó');
-        }
-
-        if ($role != 'admin') {
-            throw new Exception('Csak admin jogosultsággal lehetséges');
         }
     
         // Ha a hitelesítés sikeres, lekérdezzük a nyereményt
