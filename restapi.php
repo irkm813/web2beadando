@@ -188,7 +188,7 @@ function deleteNyeremenyItem($username,$password,$id, $role) {
             $result = $db->delete('nyeremeny', 'id = ?', [$id]);
             if ($result) {
                 header("HTTP/1.0 200 OK");
-                echo json_encode(['message' => 'Hír törölve']);
+                echo json_encode(['message' => 'Rekord törölve']);
             } else {
                 header("HTTP/1.0 500 Internal Server Error");
                 echo json_encode(['message' => 'Hiba történt a törlés során']);

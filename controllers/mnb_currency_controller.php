@@ -4,9 +4,9 @@
 $title = "MNB Currency Rates";
 
 // Adatok lekérése és feldolgozása a SOAP API-val
-require_once __DIR__ . '/../models/SoapServerModel.php';
+require_once __DIR__ . '/../models/SoapMnbClientModel.php';
 
-$soapModel = new SoapServerModel();
+$soapModel = new SoapMnbClientModel();
 $currencyPair = 'EUR-HUF';
 $date = date('Y-m-d');
 

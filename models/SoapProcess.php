@@ -1,9 +1,9 @@
 <?php
-require_once __DIR__ . '/../models/SoapServerModel.php';
+require_once __DIR__ . '/../models/SoapMnbClientModel.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rateType = $_POST['rateType'];
-    $soapModel = new SoapServerModel();
+    $soapModel = new SoapMnbClientModel();
 
     try {
         header('Content-Type: application/json');
