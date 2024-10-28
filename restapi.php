@@ -69,7 +69,7 @@ function getAllNyeremeny($username,$password) {
 }
 
 // Egy hír lekérdezése id alapján (GET)
-function getNyeremeny($username,$password,$id,$role) {
+function getNyeremeny($username,$password,$id) {
     global $db;
     try {
         
