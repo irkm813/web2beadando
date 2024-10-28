@@ -68,15 +68,11 @@ function getAllNyeremeny($username,$password) {
 }
 
 // Egy hír lekérdezése id alapján (GET)
-function getNyeremeny($username,$password,$id,$role) {
+function getNyeremeny($username,$password,$id) {
 
     try {
         if (!restApiAuth($username, $password)) {
             throw new Exception('Hibás felhasználónév vagy jelszó');
-        }
-
-        if ($role != 'admin') {
-            throw new Exception('Csak admin jogosultsággal lehetséges');
         }
     
         // Ha a hitelesítés sikeres, lekérdezzük a nyereményt
