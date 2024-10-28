@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const monthlyRadio = document.getElementById('rate-monthly');
     const dynamicContent = document.getElementById('dynamic-content');
     const currencyForm = document.getElementById('currency-form');
+    const resultContainer = document.getElementById('result-container');
+    const baseCurrencySelect = document.getElementById('base-currency');
+    const targetCurrencySelect = document.getElementById('target-currency');
 
     // jQuery UI Datepicker magyar nyelvi beállításai
     $.datepicker.regional['hu'] = {
@@ -11,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         nextText: 'Következő',
         currentText: 'Ma',
         monthNames: ['Január', 'Február', 'Március', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December'],
-        monthNamesShort: ['Január', 'Február', 'Március', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December'], // Itt is teljes neveket használunk
+        monthNamesShort: ['Január', 'Február', 'Március', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December'],
         dayNames: ['Vasárnap', 'Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat'],
         dayNamesShort: ['Vas', 'Hét', 'Ked', 'Sze', 'Csü', 'Pén', 'Szo'],
         dayNamesMin: ['V', 'H', 'K', 'Sz', 'Cs', 'P', 'Sz'],
@@ -36,9 +39,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 <input type="text" id="month-picker" name="selected-month" required>
             `;
 
-            // jQuery UI Datepicker inicializálása csak hónapokra és évekre
             $('#month-picker').datepicker({
-                dateFormat: 'yy-mm', // Formátum: év-hónap
+                dateFormat: 'yy-mm',
                 changeMonth: true,
                 changeYear: true,
                 showButtonPanel: true,
@@ -48,10 +50,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     $(this).val(`${year}-${month < 10 ? '0' + month : month}`);
                 },
                 beforeShow: function (input, inst) {
-                    $(".ui-datepicker-calendar").hide(); // Elrejti a napokat tartalmazó naptárrészt
+                    $(".ui-datepicker-calendar").hide();
                 }
             }).focus(function () {
-                $(".ui-datepicker-calendar").hide(); // Napok panel elrejtése
+                $(".ui-datepicker-calendar").hide();
             });
         }
     }
@@ -67,30 +69,57 @@ document.addEventListener('DOMContentLoaded', function () {
     currencyForm.addEventListener('submit', function (e) {
         e.preventDefault();
         const formData = new FormData(currencyForm);
-    
+        const baseCurrency = baseCurrencySelect.value;
+        const targetCurrency = targetCurrencySelect.value;
+        
         fetch('/models/SoapProcess.php', {
             method: 'POST',
             body: formData,
         })
-        .then(response => response.text())
-        .then(data => {
-            // Eredmény megjelenítése az űrlap után
-            let resultContainer = document.getElementById('result-container');
-            if (resultContainer) {
-                resultContainer.innerHTML = data;
-            } else {
-                // Új konténer létrehozása az eredmény számára
-                resultContainer = document.createElement('div');
-                resultContainer.id = 'result-container';
-                resultContainer.className = 'rate-result';
-                resultContainer.innerHTML = data;
-    
-                // Az űrlap után helyezzük el a div-et
-                document.querySelector('#currency-form').insertAdjacentElement('afterend', resultContainer);
+        .then(response => response.json()) // Feldolgozzuk JSON formátumban a választ
+        .then(response => {
+            // HTML eredmény beillesztése
+            resultContainer.innerHTML = response.html;
+
+            // Grafikon létrehozása a kapott adatokkal, ha adatok érkeztek és a 'monthly' radio gomb van kiválasztva
+            if (monthlyRadio.checked && response.chartData.length > 0) {
+                createChart(response.chartData, baseCurrency, targetCurrency);
             }
         })
         .catch(error => {
             console.error('Hiba történt:', error);
         });
     });
+
+    function createChart(chartData, baseCurrency, targetCurrency) {
+        chartData.reverse();
+        let labels = chartData.map(item => item.date.split('-')[2]);
+        let yearMonth = chartData[0].date.substring(0, 7); // 'YYYY-MM' formátum
+
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: `${baseCurrency} / ${targetCurrency} árfolyam: ${yearMonth}`,
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: chartData.map(item => item.rate),
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {}
+        };
+
+        const existingCanvas = resultContainer.querySelector('canvas');
+        if (existingCanvas) {
+            resultContainer.removeChild(existingCanvas);
+        }
+
+        const canvas = document.createElement('canvas');
+        resultContainer.appendChild(canvas);
+        new Chart(canvas, config);
+    }
+    
 });
