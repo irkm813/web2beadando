@@ -6,12 +6,13 @@ $db = new DatabaseModel();
 $request_method = $_SERVER['REQUEST_METHOD'];
 
 //Autentikáció
-if (isset($_GET['username']) && isset ($_GET['password'])){
-    $username=$_GET['username'];
-    $password=$_GET['password'];
+if (isset($_SERVER['PHP_AUTH_USER']) && isset ($_SERVER['PHP_AUTH_PW'])){
+    $username=$_SERVER['PHP_AUTH_USER'];
+    $password=$_SERVER['PHP_AUTH_PW'];
     $db_role =  $db->select('users', 'role', "username=?",'',[$username]);
     $role =  $db_role[0]["role"];
-}else{
+}
+else{
     $username=null;
     $password=null;
 }
@@ -48,14 +49,14 @@ switch ($request_method) {
 
 // Hírek listázása (GET)
 function getAllNyeremeny($username,$password) {
-    
+    global $db;
     try {
-        if (!restApiAuth($username, $password)) {
+        if (!$db->dbAuth($username, $password)) {
             throw new Exception('Hibás felhasználónév vagy jelszó');
         }
     
         // Ha a hitelesítés sikeres, lekérdezzük a nyereményeket
-        global $db;
+
         $nyeremenyItems = $db->select('nyeremeny');
         header('Content-Type: application/json');
         echo json_encode($nyeremenyItems);
@@ -68,15 +69,16 @@ function getAllNyeremeny($username,$password) {
 }
 
 // Egy hír lekérdezése id alapján (GET)
-function getNyeremeny($username,$password,$id) {
-
+function getNyeremeny($username,$password,$id,$role) {
+    global $db;
     try {
-        if (!restApiAuth($username, $password)) {
+        
+        if (!$db->dbAuth($username, $password)) {
             throw new Exception('Hibás felhasználónév vagy jelszó');
         }
     
         // Ha a hitelesítés sikeres, lekérdezzük a nyereményt
-        global $db;
+        
         $nyeremenyItem = $db->select('nyeremeny', '*', 'id = ?', '', [$id]);
         if ($nyeremenyItem) {
             header('Content-Type: application/json');
@@ -95,9 +97,9 @@ function getNyeremeny($username,$password,$id) {
 
 // Új bejegyzés létrehozása (POST)
 function createNyeremenyItem($username,$password,$role) {
-
+    global $db;
     try {
-        if (!restApiAuth($username, $password)) {
+        if (!$db->dbAuth($username, $password)) {
             throw new Exception('Hibás felhasználónév vagy jelszó');
         }
 
@@ -106,7 +108,7 @@ function createNyeremenyItem($username,$password,$role) {
         }
     
         // Ha a hitelesítés sikeres
-        global $db;
+        
         $data = json_decode(file_get_contents("php://input"), true);
         if (isset($data['huzasid']) && isset($data['talalat']) && isset($data['darab']) && isset($data['ertek'])) {
             $result = $db->insert('nyeremeny', ['huzasid' => $data['huzasid'], 'talalat' => $data['talalat'],'darab' => $data['darab'], 'ertek' => $data['ertek'] ]);
@@ -135,9 +137,9 @@ function createNyeremenyItem($username,$password,$role) {
 
 // bejegyzés frissítése (PUT)
 function updateNyeremenyItem($username,$password,$id,$role) {
-
+    global $db;
     try {
-        if (!restApiAuth($username, $password)) {
+        if (!$db->dbAuth($username, $password)) {
             throw new Exception('Hibás felhasználónév vagy jelszó');
         }
 
@@ -146,7 +148,6 @@ function updateNyeremenyItem($username,$password,$id,$role) {
         }
     
         // Ha a hitelesítés sikeres
-        global $db;
         $data = json_decode(file_get_contents("php://input"), true);
         if (isset($data['huzasid']) && isset($data['talalat']) && isset($data['darab']) && isset($data['ertek']) && $id) {
             $result = $db->update('nyeremeny', ['huzasid' => $data['huzasid'], 'talalat' => $data['talalat'],'darab' => $data['darab'], 'ertek' => $data['ertek']] ,'id = ?', [$id]);
@@ -172,8 +173,9 @@ function updateNyeremenyItem($username,$password,$id,$role) {
 
 // bejegyzés törlése (DELETE)
 function deleteNyeremenyItem($username,$password,$id, $role) {
+    global $db;
     try {
-        if (!restApiAuth($username, $password)) {
+        if (!$db->dbAuth($username, $password)) {
             throw new Exception('Hibás felhasználónév vagy jelszó');
         }
 
@@ -182,7 +184,6 @@ function deleteNyeremenyItem($username,$password,$id, $role) {
         }
     
         // Ha a hitelesítés sikeres
-        global $db;
         if ($id) {
             $result = $db->delete('nyeremeny', 'id = ?', [$id]);
             if ($result) {
@@ -202,18 +203,4 @@ function deleteNyeremenyItem($username,$password,$id, $role) {
         header('Content-Type: application/json');
         echo json_encode(['message' => $e->getMessage()]);
     }
-}
-
-//Autentikáció api hívásokoz félkész
-function restApiAuth($username,$password) {
-    global $db;
-    $db_pass =  $db->select('users', 'password', "username=?",'',[$username]);
-    $db_pass =  $db_pass[0]["password"];
-
-    if (password_verify($password, $db_pass)) {
-        return true;
-    } else {
-        return false;
-    }
-
 }

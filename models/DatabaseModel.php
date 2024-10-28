@@ -66,4 +66,18 @@ class DatabaseModel {
 
         return $stmt->execute($params);
     }
+
+    //Autentikáció api hívásokoz félkész
+    function dbAuth($username,$password) {
+        global $db;
+        $db_pass =  $db->select('users', 'password', "username=?",'',[$username]);
+        $db_pass =  $db_pass[0]["password"];
+
+        if (password_verify($password, $db_pass)) {
+            return true;
+        } 
+        else {
+            return false;
+        }
+    }
 }

@@ -1,0 +1,119 @@
+input[type="radio"] {
+    -moz-appearance: radio !important;
+    -webkit-appearance: radio !important;
+    -ms-appearance: radio !important;
+    appearance: radio !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    width: 20px !important;
+    height: 20px !important;
+    margin-right: 5px !important;
+}
+
+/* A lekérdezés gomb stílusának testreszabása */
+button[type="submit"] {
+    padding: 15px 30px; /* Nagyobb padding, hogy a gomb nagyobb legyen */
+    font-size: 18px; /* Nagyobb betűméret */
+}
+
+/* Középre helyezzük az űrlapot */
+#currency-form {
+    text-align: center;
+}
+
+/* A rádiógombok távolságának és stílusának beállítása */
+#currency-form div {
+    display: inline-block;
+    margin: 10px 40px; /* Nagyobb távolság a rádiógombok között */
+}
+
+/* A label alapértelmezett stílusa */
+.radio-label {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease; /* Animáció a háttérszín változásához */
+    cursor: pointer;
+}
+
+/* A háttér szürkülése, amikor a rádiógomb be van jelölve */
+input[type="radio"]:checked + .radio-label {
+    background-color: #f0f0f0; /* Világos szürke háttér */
+}
+
+/* A Datepicker stílusának testreszabása */
+.ui-datepicker {
+    font-size: 14px; /* Betűméret */
+    padding: 10px; /* Távolság a szélektől */
+    border: 1px solid #ccc; /* Szürke keret az egész naptár köré */
+    border-radius: 5px; /* Lekerekített sarkok */
+    background-color: #f9f9f9; /* Világos háttérszín */
+}
+
+/* A hónap és év mezők elrendezése */
+.ui-datepicker select.ui-datepicker-year,
+.ui-datepicker select.ui-datepicker-month {
+    width: 150px; /* Szélesebb mezők, hogy a teljes hónapnév elférjen */
+    padding: 5px; /* Padding, hogy legyen hely a szövegnek */
+    font-size: 14px; /* Betűméret */
+    margin: 0 5px; /* Kis margó a mezők körül */
+    text-align: center; /* Szöveg középre igazítása */
+}
+
+/* Az év és hónap mezők középre igazítása az előző/következő gombok alatt */
+.ui-datepicker-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Távolság az év és a hónap mező között */
+    flex-direction: row; /* Az év legyen elöl, a hónap mögötte */
+    margin-top: 10px; /* Távolság az előző/következő gomboktól */
+}
+
+/* Az előző és következő gombok középre helyezése a mezők fölött */
+.ui-datepicker-header {
+    display: flex;
+    justify-content: center; /* Középre igazítja az előző/következő gombokat */
+    align-items: center;
+    gap: 10px; /* Távolság az előző és következő gombok között */
+    padding-bottom: 5px; /* Távolság a mezők előtt */
+    border-bottom: 1px solid #ccc; /* Vékony vonal a gombok és a mezők között */
+}
+
+/* A gombok (Ma és Bezár) stílusának beállítása */
+.ui-datepicker-buttonpane {
+    margin-top: 10px; /* Távolság a gombpanel és a naptár között */
+    padding-top: 5px; /* Extra padding a tetején */
+    display: flex;
+    justify-content: flex-end; /* Jobbra igazítja a gombokat */
+    gap: 10px; /* Távolság a gombok között */
+}
+
+.ui-datepicker-close,
+.ui-datepicker-current {
+    background-color: #d9534f; /* Gombok színe */
+    border: none;
+    color: white;
+    padding: 5px 20px; /* Szélesebb padding a gombokhoz, hogy egyformák legyenek */
+    border-radius: 5px;
+    cursor: pointer;
+    min-width: 80px; /* Minimális szélesség, hogy a gombok egyformák legyenek */
+    text-align: center; /* Szöveg középre igazítása */
+}
+
+.ui-datepicker-close:hover,
+.ui-datepicker-current:hover {
+    background-color: #c9302c; /* Gombok színe hover állapotban */
+}
+
+.rate-result {
+    text-align: center !important; /* Középre igazítja a szöveget */
+    margin: 20px auto !important; /* Margó középre igazítással */
+    font-size: 32px !important; /* Nagyobb betűméret */
+    width: 100% !important; /* Teljes szélesség */
+    display: block !important; /* Blokk szintű elem, hogy külön sorba kerüljön */
+    padding-top: 20px !important; /* Távolság az űrlap felett */
+}
+
+
+

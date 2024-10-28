@@ -18,30 +18,41 @@ $menuItems = $db->select(
 
 // 1. URL értelmezése
 $request = $_SERVER['REQUEST_URI'];
+$isApi= false;
 
-//Az api elérés megfelelő kezelése
+//A rest api elérés megfelelő kezelése
 if (strpos($request, '/restapi') === 0) {
     require __DIR__ . '/restapi.php';
+    exit;
 }
-else{
-    // 2. Szétválasztás a route-okra, amennyiben nem az api-t próbáljuk elérni
-    switch ($request) {
-        case '/':
-            require __DIR__ . '/controllers/home_controller.php';
+
+//Soap api elérés megfelelő kezelése
+if (strpos($request, '/soapapi') === 0) {
+    require __DIR__ . '/models/SoapServerModel.php';
+    exit;
+}
+
+// 2. Szétválasztás a route-okra, amennyiben nem az api-t próbáljuk elérni
+switch ($request) {
+    case '/':
+        require __DIR__ . '/controllers/home_controller.php';
+        break;
+    case '/left-sidebar':
+        require __DIR__ . '/controllers/left_sidebar_controller.php';
+        break;
+    case '/right-sidebar':
+        require __DIR__ . '/controllers/right_sidebar_controller.php';
+        break;
+    case '/no-sidebar':
+        require __DIR__ . '/controllers/no_sidebar_controller.php';
+        break;
+    case '/mnb-currency':
+            require __DIR__ . '/controllers/mnb_currency_controller.php';
             break;
-        case '/left-sidebar':
-            require __DIR__ . '/controllers/left_sidebar_controller.php';
-            break;
-        case '/right-sidebar':
-            require __DIR__ . '/controllers/right_sidebar_controller.php';
-            break;
-        case '/no-sidebar':
-            require __DIR__ . '/controllers/no_sidebar_controller.php';
-            break;
-        default:
-            http_response_code(404);
-            require __DIR__ . '/views/404.php';
-            break;
-    }
+    default:
+        http_response_code(404);
+        require __DIR__ . '/views/404.php';
+        break;
+
 }
 
