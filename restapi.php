@@ -1,4 +1,25 @@
 <?php
+// Check if the request has an Origin header
+if (isset($_SERVER['HTTP_ORIGIN'])) {
+    // Allow requests from this specific origin
+    header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
+} else {
+    // Default origin for CORS, if no Origin header is provided
+    header("Access-Control-Allow-Origin: https://www.kutyautes.hu");
+}
+
+// Allow specific methods
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+
+// Allow specific headers
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+// Handle preflight requests
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
 // restapi.php
 require_once __DIR__ . '/models/DatabaseModel.php';
 

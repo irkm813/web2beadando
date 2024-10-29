@@ -46,7 +46,6 @@ function restMethods() {
         default:
           console.log(`Sorry, we are out of ${expr}.`);
       }
-
 }
 
 async function sendRestRequest(event,username,password) {
