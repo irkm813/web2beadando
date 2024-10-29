@@ -43,8 +43,8 @@ switch ($request) {
     case '/right-sidebar':
         require __DIR__ . '/controllers/right_sidebar_controller.php';
         break;
-    case '/no-sidebar':
-        require __DIR__ . '/controllers/no_sidebar_controller.php';
+    case '/api-kliens':
+        require __DIR__ . '/controllers/api_kliens_controller.php';
         break;
     case '/mnb-currency':
             require __DIR__ . '/controllers/mnb_currency_controller.php';
