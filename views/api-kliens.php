@@ -56,13 +56,13 @@
                                     </div>
 
                                     <div id=darabContainer>
-                                        <label for="darab">Item ID:</label>
+                                        <label for="darab">Darab:</label>
                                         <input type="number" name="darab" id="darab" ><br>
                                     </div>
 
                                     <div id=ertekContainer>
-                                        <label for="ertekId">Item ID:</label>
-                                        <input type="number" name="ertekId" id="ertekId" ><br>
+                                        <label for="ertek">Érték:</label>
+                                        <input type="number" name="ertek" id="ertek" ><br>
                                     </div>
                   
 

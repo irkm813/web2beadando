@@ -6,6 +6,7 @@ function toggleForm() {
 
 function restMethods() {
     const requestType = document.getElementById("httprequest").value;
+    clearValues();
 
     switch (requestType) {
 
@@ -55,17 +56,17 @@ async function sendRestRequest(event) {
     let endpoint = 'http://localhost/restapi';
 
     // Authentication credentials
-    const username = 'yourUsername';
-    const password = 'yourPassword';
+    const username = 'admin';
+    const password = 'BundasKenyer.NagyonFinom69..5';
     const authHeader = 'Basic ' + btoa(`${username}:${password}`);
 
     // Collect form data
     const data = {
-        itemId: document.getElementById("itemId").value,
-        huzasId: document.getElementById("huzasId").value,
+        id: document.getElementById("itemId").value,
+        huzasid: document.getElementById("huzasId").value,
         talalat: document.getElementById("talalat").value,
         darab: document.getElementById("darab").value,
-        ertekId: document.getElementById("ertekId").value
+        ertek: document.getElementById("ertek").value
     };
 
     // Clean data by removing empty fields
@@ -81,10 +82,16 @@ async function sendRestRequest(event) {
         }
     };
 
-    if (requestType === "POST" || requestType === "PUT") {
+    if (requestType === "POST") {
         // Add JSON body for POST and PUT requests
         options.body = JSON.stringify(data);
-    } else if (requestType === "DELETE" || requestType === "GET") {
+    }else if (requestType === "PUT"){
+
+        endpoint += '?id=' + data['id'];
+        delete data['id'];
+        options.body = JSON.stringify(data);
+
+    }else if (requestType === "DELETE" || requestType === "GET") {
         // Append data as query parameters for DELETE and GET requests
         let queryString = new URLSearchParams(data).toString();
         endpoint += '?' + queryString;
@@ -93,6 +100,7 @@ async function sendRestRequest(event) {
     try {
 
         const response = await fetch(endpoint,options);
+        console.log(endpoint);
         const responseData = await response.json();
 
         // Display response
@@ -106,6 +114,14 @@ async function sendRestRequest(event) {
             <p style="color:red;">Failed to send request: ${error}</p>
         `;
     }
+}
+
+function clearValues(){
+    document.getElementById("itemId").value = null;
+    document.getElementById("huzasId").value = null;
+    document.getElementById("talalat").value = null;
+    document.getElementById("darab").value = null;
+    document.getElementById("ertek").value = null;
 }
 
 // Initialize with REST form hidden
