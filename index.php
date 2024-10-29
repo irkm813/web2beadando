@@ -49,6 +49,9 @@ switch ($request) {
     case '/mnb-currency':
             require __DIR__ . '/controllers/mnb_currency_controller.php';
             break;
+    case '/pdf-maker':
+            require __DIR__ . '/controllers/pdf_controller.php';
+            break;
     default:
         http_response_code(404);
         require __DIR__ . '/views/404.php';
