@@ -1,3 +1,9 @@
+<?php
+$config = require __DIR__ . '/../config.php';
+$username = $config['user_name'];
+$password = $config['user_pass'];
+?>
+
 <!DOCTYPE HTML>
 <!--
 	Helios by HTML5 UP
@@ -30,7 +36,7 @@
                             <p></p>
                             <!-- REST Form -->
                             <div id="restForm" class="form-container">
-                                <form id="httprequestform" onsubmit="sendRestRequest(event)">
+                                <form id="httprequestform" onsubmit="sendRestRequest(event,'<?php echo $username; ?>', '<?php echo $password; ?>')">
                                     <h3>REST API Client</h3>
                                     <label for="httprequest">Válasszon HTTP kérést:</label>
                                         <select id="httprequest" onchange="restMethods()">

@@ -49,15 +49,13 @@ function restMethods() {
 
 }
 
-async function sendRestRequest(event) {
+async function sendRestRequest(event,username,password) {
     event.preventDefault(); // Prevent the default form submission
 
     const requestType = document.getElementById("httprequest").value;
     let endpoint = 'http://localhost/restapi';
 
     // Authentication credentials
-    const username = 'admin';
-    const password = 'BundasKenyer.NagyonFinom69..5';
     const authHeader = 'Basic ' + btoa(`${username}:${password}`);
 
     // Collect form data
