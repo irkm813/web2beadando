@@ -1,0 +1,3 @@
+GitHub: https://github.com/tecnickcom/tc-lib-pdf
+Itt Getting started rész alatt Composer-re katt.
+Telepítés után cmd vagy shell-be navigáljunk a honlap gyökérkönyvtárához (xampp esetén htdocs), majd ezt futtassuk: composer require tecnickcom/tcpdf
