@@ -61,6 +61,10 @@
     border-radius: 50%;
   } 
 
-  #itemId {
+  input {
     text-align: center;
   }
+
+tr{
+  border: 1px solid black;
+}
