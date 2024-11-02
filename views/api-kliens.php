@@ -1,9 +1,3 @@
-<?php
-$config = require __DIR__ . '/../config.php';
-$username = $config['user_name'];
-$password = $config['user_pass'];
-?>
-
 <!DOCTYPE HTML>
 <!--
 	Helios by HTML5 UP
@@ -79,14 +73,40 @@ $password = $config['user_pass'];
 
                             <!-- SOAP Form -->
                             <div id="soapForm" class="form-container">
-                                <form method="post" action="api_client.php">
+                                <form form id="soaprequestform" onsubmit="callSoapApi(event,'<?php echo $username; ?>', '<?php echo $password; ?>')">
+
                                     <h3>SOAP API Client</h3>
-                                    <label for="soapEndpoint">Endpoint:</label>
-                                    <input type="text" name="soapEndpoint" id="soapEndpoint" required><br>
-                                    <label for="soapAction">SOAP Action:</label>
-                                    <input type="text" name="soapAction" id="soapAction" required><br>
-                                    <label for="soapData">Data (XML):</label>
-                                    <textarea name="soapData" id="soapData" required></textarea><br>
+                                    
+                                    <label for="SOAPrequest">Válasszon SOAP kérést:</label>
+                                    <select id="SOAPrequest" onchange="soapMethods()">
+                                        <option value="getAllItems">Az összes rekord lekérdezése</option>
+                                        <option value="getDataById">Egy Rekord lekérdezése</option>
+                                        <option value="addRecord">Új rekord létrehozása</option>
+                                        <option value="updateRecord">Egy rekord frissítése</option>
+                                        <option value="deleteRecord">Egy rekord törlése</option>
+                                    </select>
+
+                                    <label for="soapTable">Válasszon Táblát:</label>
+                                    <select id="soapTable" onchange="getSoapParameters()">
+                                        <option default value="">Válasszon táblát</option>
+                                        <option value="currencies">Currencies</option>
+                                        <option value="huzas">Húzás</option>
+                                        <option value="huzott">Húzott</option>
+                                        <option value="nyeremeny">Nyeremény</option>
+                                    </select>
+
+                                    <div id=soapItemIdContainer>
+                                        <label for="soapItemId">Item ID:</label>
+                                        <input type="number" name="soapItemId" id="soapItemId"><br>
+                                    </div>
+
+                                    <div id=soapParametersContainer>
+                                        
+                                        <label for="soapParameters">Soap paraméterek:</label>
+                                        <div id="soapParametersHelp"></div>
+                                        <input type="text" name="soapParameters" id="soapParameters" placeholder="Pl: ev:2001,het:23">
+                                    </div>
+
                                     <input type="hidden" name="apiType" value="soap">
                                     <button type="submit">Submit SOAP Request</button>
                                 </form>
