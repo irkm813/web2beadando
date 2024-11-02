@@ -2,7 +2,7 @@
 	<!-- Inner -->
 	<div class="inner">
 		<header>
-			<h1><a href="/" id="logo">Helios</a></h1>
+			<h1><a href="/" id="logo">Hatos Lottó</a></h1>
 		</header>
 	</div>
 
