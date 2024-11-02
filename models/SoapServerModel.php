@@ -4,6 +4,7 @@
 require_once __DIR__ . '/DatabaseModel.php';
 
 class SoapServerModel {
+
     private $db;
     private $credentials;
     private $username;
@@ -153,9 +154,14 @@ class SoapServerModel {
 
 $options = [
     'uri' => 'http://localhost/soapapi',
-    'soap_version' => SOAP_1_2, // optional, choose SOAP version
-    'trace' => true             // for debugging purposes];
+    'soap_version' => SOAP_1_2,
+    'trace' => true
 ];
+
+header("Access-Control-Allow-Origin: *"); // Engedélyezi minden domain számára, hogy hozzáférjen
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS"); // A megengedett HTTP metódusok
+header("Access-Control-Allow-Headers: Content-Type, Authorization"); // A megengedett fejlécek
+
 $server = new SoapServer(null, $options);
 $server->setClass('SoapServerModel');
 $server->handle();

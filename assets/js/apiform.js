@@ -265,6 +265,11 @@ function callSoapApi(event,username,password) {
         if (xhr.readyState === 4) { // A kérés elkészült
             if (xhr.status === 200) { // Sikeres válasz
 
+
+                let successMessage = document.createElement("p");
+                successMessage.textContent = "Sikeres API hívás!";
+                responseContainer.appendChild(successMessage);
+
                 let formattedXml = xhr.response;
 
                 // Parse the XML string to a DOM object
