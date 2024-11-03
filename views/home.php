@@ -10,76 +10,89 @@
 			<div id="header">
 
 				<!-- Inner -->
-					<div class="inner">
-						<header>
-							<a href="#banner"><img src="/images/hatoslotto.png" alt=""></a>
-						</header>
-					</div>
+				<div class="inner">
+					<header>
+						<a href="#banner"><img src="/images/hatoslotto.png" alt=""></a>
+					</header>
+				</div>
 
 				<!-- Nav -->
-
 				<nav id="nav">
 					<ul>
-						
-					<?php
-						$lastmenuwasmain = false;
-						$isFirstElement = true;
+						<?php
+							$lastmenuwasmain = false;
+							$isFirstElement = true;
 
-						foreach ($menuItems as $menuItem) {
-							$menuName = htmlspecialchars($menuItem['menu_name']);
-							$content = htmlspecialchars($menuItem['content']);
+							foreach ($menuItems as $menuItem) {
+								$menuName = htmlspecialchars($menuItem['menu_name']);
+								$content = htmlspecialchars($menuItem['content']);
 
-							if ($menuName[0] != '/') {
-								// Bezárja a lista tag-et, ha az előző menü nem almenü volt
-								if ($lastmenuwasmain) {
-									echo "</li>";
-								}
-								elseif ($isFirstElement == false){
-									echo "</ul>";
-								}
-								
-								// Egy fő menüelemet renderel
-								echo "<li><a href=\"$content\">$menuName</a>";
-								$lastmenuwasmain = true;
-							} else {
-								// This is a submenu item
-								if ($lastmenuwasmain) {
-									echo "<ul>"; // Nyit egy új listát a fő listaelemen belül
-									$lastmenuwasmain = false;
+								if ($menuName[0] != '/') {
+									// Bezárja a lista tag-et, ha az előző menü nem almenü volt
+									if ($lastmenuwasmain) {
+										echo "</li>";
+									} elseif ($isFirstElement == false) {
+										echo "</ul>";
+									}
+									
+									// Egy fő menüelemet renderel
+									echo "<li><a href=\"$content\">$menuName</a>";
+									$lastmenuwasmain = true;
+								} else {
+									// Ez egy almenü elem
+									if ($lastmenuwasmain) {
+										echo "<ul>"; // Nyit egy új listát a fő listaelemen belül
+										$lastmenuwasmain = false;
+									}
+
+									// Rendereli az almenüt
+									$submenuName = substr($menuName, 1);
+									echo "<li class=\"submenu\"><a href=\"$content\">$submenuName</a></li>";
 								}
 
-								// Rendereli az almenüt
-								$submenuName = substr($menuName, 1);
-								echo "<li class=\"submenu\"><a href=\"$content\">$submenuName</a></li>";
+								$isFirstElement = false;
 							}
 
-							$isFirstElement = false;
-						}
-
-						// Ha van nem bezárt tag a loop után, akkor azokat lezárja
-						if ($lastmenuwasmain) {
-							echo "</li>";
-						} else {
-							echo "</ul></li>";
-						}
+							// Ha van nem bezárt tag a loop után, akkor azokat lezárja
+							if ($lastmenuwasmain) {
+								echo "</li>";
+							} else {
+								echo "</ul></li>";
+							}
 						?>
-
 					</ul>
 				</nav>
-
-
-
 			</div>
 
-		<!-- Banner -->
+			<!-- Banner -->
 			<section id="banner">
 				<header>
 					<h2>Üdvözöljük a <strong>Hatos Lottó</strong> weboldalán!</h2>
+					<?php
+						// Ellenőrizzük a felhasználó státuszát
+						if (isset($_SESSION['username'])) {
+							// Adatbázisból lekérdezzük a felhasználó szerepkörét
+							$username = $_SESSION['username'];
+							$userData = $db->select('users', 'role', 'username = ?', '', [$username]);
+
+							// Ellenőrizzük a szerepkört és megjelenítjük a státuszt
+							if (!empty($userData)) {
+								$role = $userData[0]['role'];
+								if ($role === 'admin') {
+									echo "<p>Jelenlegi profil: Admin</p>";
+								} else {
+									echo "<p>Jelenlegi profil: Regisztrált látogató</p>";
+								}
+							}
+						} else {
+							echo "<p>Jelenlegi profil: Látogató</p>";
+						}
+					?>
 					<p>Weboldalunk funkciói:</p>
 				</header>
 			</section>
 
-		<!-- Carousel -->
+			<!-- Carousel -->
 			<section class="carousel">
 				<div class="reel">
 					<article>
@@ -101,7 +114,7 @@
 					<article>
 						<a href="/pdf-maker" class="image featured"><img src="images/pdf.jpg" alt="" /></a>
 						<header>
-							<h3><a href="/pdf-maker">PDF generás<label for=""></label></a></h3>
+							<h3><a href="/pdf-maker">PDF generálás</a></h3>
 						</header>
 						<p>Letölthető PDF-et tud generálni a kiválasztott év és hét nyereményeiből</p>
 					</article>
@@ -119,15 +132,13 @@
 						<header>
 							<h3><a href="#">Valami</a></h3>
 						</header>
-						<p>Nem tudom </p>
+						<p>Nem tudom</p>
 					</article>
-
 				</div>
 			</section>
 
-		<!-- Main -->
+			<!-- Main -->
 			<div class="wrapper style2">
-
 				<article id="main" class="container special">
 					<a href="#" class="image featured"><img src="images/money.jpg" alt="" /></a>
 					<header>
@@ -143,7 +154,6 @@
 						<a href="/pdf-maker" class="button">Nézze meg, eddig hányan és mennyit nyertek!</a>
 					</footer>
 				</article>
-
 			</div>
 
 			<!-- Lábléc betöltése -->
@@ -152,14 +162,14 @@
 		</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
 
 	</body>
 </html>

@@ -20,7 +20,7 @@ class DatabaseModel {
     public function select($table, $columns = "*", $where = "", $join = "", $params = []) {
         $sql = "SELECT $columns FROM $table";
 
-        if ($join){
+        if ($join) {
             $sql .= " $join";
         }
         
@@ -67,17 +67,32 @@ class DatabaseModel {
         return $stmt->execute($params);
     }
 
-    //Autentikáció api hívásokoz félkész
-    function dbAuth($username,$password) {
-        global $db;
-        $db_pass =  $db->select('users', 'password', "username=?",'',[$username]);
-        $db_pass =  $db_pass[0]["password"];
+    // Autentikációs metódus a bejelentkezéshez
+    public function dbAuth($username, $password) {
+        $result = $this->select('users', 'password', "username = ?", '', [$username]);
 
-        if (password_verify($password, $db_pass)) {
-            return true;
-        } 
-        else {
-            return false;
+        if (!empty($result)) {
+            $db_pass = $result[0]["password"];
+            return password_verify($password, $db_pass);
         }
+
+        return false;
+    }
+
+    // Ellenőrzi, hogy létezik-e a felhasználó a megadott névvel vagy e-mail címmel
+    public function userExists($username, $email) {
+        $result = $this->select('users', '*', "username = ? OR email = ?", '', [$username, $email]);
+        return !empty($result);
+    }
+
+    // Új felhasználó regisztrációja
+    public function registerUser($username, $email, $password) {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        return $this->insert('users', [
+            'username' => $username,
+            'email' => $email,
+            'password' => $hashedPassword,
+            'role' => 'user'
+        ]);
     }
 }

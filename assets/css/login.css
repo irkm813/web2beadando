@@ -1,0 +1,55 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+form label {
+    font-size: 1.5rem;
+    padding-top: 1.2rem;
+}
+
+form input {
+    padding: 0.6rem 1.2rem;
+    font-size: 1.5rem;
+    min-width: 6ch;
+    border-radius: 0.3rem;
+}
+
+form button {
+    padding: 0.7rem 1.2rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-top: 1.5rem;
+}
+
+.register-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+.register-section p {
+    margin: 0;
+}
+.register-section a {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: #0073e6;
+    text-decoration: underline;
+}
+.register-section a:hover {
+    color: #005bb5;
+}
+.error-message {
+    color: red;
+    font-weight: bold;
+}
