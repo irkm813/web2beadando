@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const data = {
             labels: labels,
             datasets: [{
-                label: `${baseCurrency} / ${targetCurrency} árfolyam: ${yearMonth}`,
+                label: `${targetCurrency} / ${baseCurrency} árfolyam: ${yearMonth}`,
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
                 data: chartData.map(item => item.rate),

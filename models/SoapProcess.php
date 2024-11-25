@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $result = $soapModel->getExchangeRateByCurrencyPair($baseCurrency, $targetCurrency, $selectedDate);
         
             if ($result !== null && $result !== '' && !str_contains($result, 'Nincs elérhető adat')) {
-                $response['html'] = "<div class='rate-result'>Az árfolyam $selectedDate napon: $result $baseCurrency / $targetCurrency</div>";
+                $response['html'] = "<div class='rate-result'>Az árfolyam $selectedDate napon: $result $targetCurrency / $baseCurrency</div>";
             } else {
                 $response['html'] = "<div class='rate-result'>" . htmlspecialchars($result) . "</div>";
             }
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($trimmedResult !== null && $trimmedResult !== '' && !str_contains($trimmedResult, '<table border="1"><tr><th>Date</th><th>Exchange Rate</th></tr></table>')) {
                 $modifiedResult = str_replace(
                     ['Date', 'Exchange Rate'], 
-                    ["Dátum', 'Árfolyam ($baseCurrency / $targetCurrency)"], 
+                    ["Dátum", "Árfolyam ($targetCurrency / $baseCurrency)"],
                     $trimmedResult
                 );
                 $response['html'] = "<div class='rate-result'>" . $modifiedResult . "</div>";
