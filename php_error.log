@@ -1,0 +1,60 @@
+[29-Nov-2024 21:38:42 Europe/Berlin] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in C:\Users\Ferko\Documents\web2beadando\controllers\logout_controller.php on line 4
+[29-Nov-2024 21:41:22 Europe/Berlin] Headers: Array
+(
+    [Host] => localhost
+    [Connection] => keep-alive
+    [Cache-Control] => max-age=0
+    [sec-ch-ua] => "Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"
+    [sec-ch-ua-mobile] => ?0
+    [sec-ch-ua-platform] => "Windows"
+    [Upgrade-Insecure-Requests] => 1
+    [User-Agent] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+    [Accept] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [Sec-Fetch-Site] => same-origin
+    [Sec-Fetch-Mode] => navigate
+    [Sec-Fetch-User] => ?1
+    [Sec-Fetch-Dest] => document
+    [Referer] => http://localhost/
+    [Accept-Encoding] => gzip, deflate, br, zstd
+    [Accept-Language] => hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7
+    [Cookie] => PHPSESSID=0veif3qcgq1tbofmn026ukc75r
+)
+
+[29-Nov-2024 21:41:23 Europe/Berlin] Headers: Array
+(
+    [Host] => localhost
+    [Connection] => keep-alive
+    [sec-ch-ua-platform] => "Windows"
+    [User-Agent] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+    [sec-ch-ua] => "Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"
+    [sec-ch-ua-mobile] => ?0
+    [Accept] => image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+    [Sec-Fetch-Site] => same-origin
+    [Sec-Fetch-Mode] => no-cors
+    [Sec-Fetch-Dest] => image
+    [Referer] => http://localhost/assets/css/main.css
+    [Accept-Encoding] => gzip, deflate, br, zstd
+    [Accept-Language] => hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7
+    [Cookie] => PHPSESSID=0veif3qcgq1tbofmn026ukc75r
+)
+
+[29-Nov-2024 21:41:27 Europe/Berlin] Headers: Array
+(
+    [Host] => localhost
+    [Connection] => keep-alive
+    [sec-ch-ua-platform] => "Windows"
+    [Authorization] => Basic YWRtaW46QnVuZGFzS2VueWVyLk5hZ3lvbkZpbm9tNjkuLjU=
+    [User-Agent] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+    [sec-ch-ua] => "Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"
+    [Content-Type] => application/json
+    [sec-ch-ua-mobile] => ?0
+    [Accept] => */*
+    [Sec-Fetch-Site] => same-origin
+    [Sec-Fetch-Mode] => cors
+    [Sec-Fetch-Dest] => empty
+    [Referer] => http://localhost/api-kliens
+    [Accept-Encoding] => gzip, deflate, br, zstd
+    [Accept-Language] => hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7
+    [Cookie] => PHPSESSID=0veif3qcgq1tbofmn026ukc75r
+)
+

@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($userData)) {
             $_SESSION['user_id'] = $userData[0]['id'];
             $_SESSION['username'] = $userData[0]['username']; // Az adatbázisból lekért pontos `username`
+            $_SESSION['password'] = $_POST['password']; 
             
             // Átirányítás a védett oldalra vagy a kezdőlapra
             header("Location: /");

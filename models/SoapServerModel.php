@@ -152,8 +152,14 @@ class SoapServerModel {
     }
 }
 
+
+
 $options = [
-    'uri' => 'http://localhost/soapapi',
+    'uri' => sprintf(
+        '%s://%s/soapapi',
+        isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http',
+        $_SERVER['HTTP_HOST']
+    ),
     'soap_version' => SOAP_1_2,
     'trace' => true
 ];

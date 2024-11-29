@@ -30,7 +30,7 @@
                             <p></p>
                             <!-- REST Form -->
                             <div id="restForm" class="form-container">
-                                <form id="httprequestform" onsubmit="sendRestRequest(event,'<?php echo $username; ?>', '<?php echo $password; ?>')">
+                                <form id="httprequestform" onsubmit="sendRestRequest(event,'<?php echo $_SESSION['username']; ?>', '<?php echo $_SESSION['password']; ?>')">
                                     <h3>REST API Client</h3>
                                     <label for="httprequest">Válasszon HTTP kérést:</label>
                                         <select id="httprequest" onchange="restMethods()">
@@ -73,7 +73,7 @@
 
                             <!-- SOAP Form -->
                             <div id="soapForm" class="form-container">
-                                <form form id="soaprequestform" onsubmit="callSoapApi(event,'<?php echo $username; ?>', '<?php echo $password; ?>')">
+                                <form form id="soaprequestform" onsubmit="callSoapApi(event,'<?php echo $_SESSION['username']; ?>', '<?php echo $_SESSION['password']; ?>')">
 
                                     <h3>SOAP API Client</h3>
                                     

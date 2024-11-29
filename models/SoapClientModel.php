@@ -10,7 +10,7 @@ class SoapMnbClientModel {
     //Konstruktor
     public function __construct() {
         try {
-            $this->mySoapClient= new SoapClient("http://localhost/soapapi");
+            $this->mySoapClient= new SoapClient(__DIR__ . "/soapapi");
         } catch (Exception $e) {
             echo 'SOAP Kliens inicializálási hiba: ' . $e->getMessage();
             $this->mySoapClient = null; // Állítsd be null-ra, ha nem sikerül az inicializálás

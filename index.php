@@ -1,9 +1,20 @@
 <?php
 // index.php - Front Controller
-session_start();
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => $_SERVER['HTTP_HOST'], // vagy pontos domain
+    'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on', // Csak HTTPS
+    'httponly' => true, // Csak szerveroldalon használható
+    'samesite' => 'Strict' // Megakadályozza a cross-site támadásokat
+]);
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+    ini_set('session.cookie_secure', '1');
+}
+
+session_start();
 
 require_once __DIR__ . '/models/DatabaseModel.php';
 

@@ -131,13 +131,14 @@ function soapMethods() {
 }
 
 async function sendRestRequest(event,username,password) {
+    
     event.preventDefault(); // Prevent the default form submission
     document.getElementById("responseContainer").innerHTML = "";
     const requestType = document.getElementById("httprequest").value;
-    let endpoint = 'http://localhost/restapi';
+    let endpoint = `${window.location.origin}/restapi`;
 
     // Authentication credentials
-    const authHeader = 'Basic ' + btoa(`${username}:${password}`);
+    const authHeader = 'Basic ' + btoa(decodeURIComponent(`${username}:${password}`));
 
     // Collect form data
     const data = {
@@ -215,7 +216,7 @@ function callSoapApi(event,username,password) {
     const requestType = document.getElementById("SOAPrequest").value;
     let innerContent ="";
 
-    const url = 'http://localhost/soapapi'; // SOAP API végpont URL-je
+    const url = `${window.location.origin}/soapapi`; // SOAP API végpont URL-je
 
     let soapTable = document.getElementById("soapTable").value;
     let soapId =  document.getElementById("soapItemId").value;
@@ -235,12 +236,14 @@ function callSoapApi(event,username,password) {
         innerContent += `<${key}>${value}</${key}>`;
     }
 
+    const namespaceUrl = `${window.location.origin}/soapapi`
+
     // SOAP kérés XML
     const soapRequest =
         `<?xml version="1.0" encoding="UTF-8"?>
            <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
            <soap:Body>
-                <${requestType} xmlns="http://localhost/soapapi">
+                <${requestType} xmlns="${namespaceUrl}">
                     ${soapTable}
                     ${soapId}
                     <data>
@@ -249,8 +252,6 @@ function callSoapApi(event,username,password) {
                 </${requestType}>
            </soap:Body>
         </soap:Envelope>`;
-
-    console.log(`valami: ${soapRequest}`);
 
     // Új XMLHttpRequest létrehozása
     const xhr = new XMLHttpRequest();
