@@ -131,11 +131,18 @@ function soapMethods() {
 }
 
 async function sendRestRequest(event,username,password) {
-    
+  
     event.preventDefault(); // Prevent the default form submission
     document.getElementById("responseContainer").innerHTML = "";
     const requestType = document.getElementById("httprequest").value;
     let endpoint = `${window.location.origin}/restapi`;
+
+    if (username==null || password==null) {
+        document.getElementById("responseContainer").innerHTML = `
+            <h3>Kérem jelentkezzen be az API hozzáféréshez!</h3>
+        `;
+        return;
+    }
 
     // Authentication credentials
     const authHeader = 'Basic ' + btoa(decodeURIComponent(`${username}:${password}`));
@@ -210,6 +217,13 @@ function callSoapApi(event,username,password) {
 
     event.preventDefault();
     document.getElementById("responseContainer").innerHTML = "";
+
+    if (username==null || password==null) {
+        document.getElementById("responseContainer").innerHTML = `
+            <h3>Kérem jelentkezzen be az API hozzáféréshez!</h3>
+        `;
+        return;
+    }
 
     // Basic Auth felhasználónév és jelszó
     const credentials = btoa(`${username}:${password}`); 

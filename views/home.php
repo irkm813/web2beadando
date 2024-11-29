@@ -12,7 +12,7 @@
 				<!-- Inner -->
 				<div class="inner">
 					<header>
-						<a href="#banner"><img src="/images/hatoslotto.png" alt=""></a>
+						<a href="#banner" class="image featured" id="logo"><img src="/images/hatoslotto.png" alt=""></a>
 					</header>
 				</div>
 
